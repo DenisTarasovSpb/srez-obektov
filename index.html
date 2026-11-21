@@ -1,0 +1,269 @@
+<meta charset="utf-8">
+<title>Объекты Нины на рынке</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Отчёт-лента: синяя шапка, три итога, затем по объекту — вывод, лента дат, график, объявления со ссылками */
+:root{
+  --bg:#F3F5FA; --card:#FFFFFF; --ink:#16203A; --mute:#5B6680; --line:#D8DEEC;
+  --blue:#294D9D; --blue-ink:#FFFFFF; --blue-soft:#E6ECF8;
+  --ok:#2E8B57; --ok-soft:#E3F3EA; --warn:#B4532A; --warn-soft:#FBEBE3; --gone:#8A93A8; --gone-soft:#ECEEF3;
+  --hero1:#1E3A7B; --hero2:#3A63BE;
+  --f-ui:"Manrope", "Helvetica Neue", Arial, sans-serif;
+  --f-num:"IBM Plex Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0F1422; --card:#182036; --ink:#E7ECF7; --mute:#9AA6C2; --line:#2A3553;
+  --blue:#7EA2F0; --blue-ink:#0F1422; --blue-soft:#1F2B4A;
+  --ok:#5CC48A; --ok-soft:#183427; --warn:#F09A72; --warn-soft:#3A2219; --gone:#8C96AE; --gone-soft:#232B40;
+  --hero1:#14244D; --hero2:#24407F; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0F1422; --card:#182036; --ink:#E7ECF7; --mute:#9AA6C2; --line:#2A3553;
+  --blue:#7EA2F0; --blue-ink:#0F1422; --blue-soft:#1F2B4A;
+  --ok:#5CC48A; --ok-soft:#183427; --warn:#F09A72; --warn-soft:#3A2219; --gone:#8C96AE; --gone-soft:#232B40;
+  --hero1:#14244D; --hero2:#24407F; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-ui);font-size:16px;line-height:1.55}
+.wrap{max-width:1040px;margin:0 auto;padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px))}
+h1,h2,h3{text-wrap:balance;margin:0;line-height:1.2}
+a{color:var(--blue)}
+a:focus-visible{outline:2px solid var(--blue);outline-offset:2px;border-radius:4px}
+.n,.num{font-variant-numeric:tabular-nums}
+
+.hero{background:radial-gradient(120% 140% at 85% 0%, var(--hero2), var(--hero1));color:#fff}
+.hero .wrap{padding-block:44px 40px;display:grid;gap:14px}
+.eyebrow{font-size:13px;letter-spacing:.08em;text-transform:uppercase;opacity:.8;font-weight:600}
+.hero h1{font-size:clamp(30px,5vw,46px);font-weight:800;letter-spacing:-.02em}
+.hero p{margin:0;max-width:62ch;opacity:.9}
+
+.sum{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:-22px}
+.sum a{display:grid;gap:6px;align-content:start;text-decoration:none;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 18px 16px;box-shadow:0 6px 18px rgba(20,32,70,.08)}
+.sum a:hover{border-color:var(--blue)}
+.sum .k{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--mute);font-weight:700}
+.sum .big{font-size:28px;font-weight:800;color:var(--blue);letter-spacing:-.01em}
+.sum .s{font-size:14px;color:var(--mute)}
+.sum .go{font-size:13px;font-weight:700;color:var(--blue);margin-top:4px}
+
+.deal{margin-top:22px;display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:center;background:var(--ok-soft);border:1px solid var(--ok);border-radius:14px;padding:16px 18px}
+.deal .mark{font-weight:800;font-size:15px;color:var(--card);background:var(--ok);border-radius:10px;padding:8px 12px;white-space:nowrap}
+.deal p{margin:0}
+.deal b{color:var(--ok)}
+
+section.obj{margin-top:48px;display:grid;grid-template-columns:minmax(0,1fr);gap:18px}
+section.obj > *{min-width:0}
+td:first-child{min-width:190px}
+.obj-h{display:grid;gap:4px}
+.obj-h .k{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--blue);font-weight:700}
+.obj-h h2{font-size:clamp(24px,3.4vw,32px);font-weight:800;letter-spacing:-.01em}
+.obj-h p{margin:0;color:var(--mute)}
+
+.verdict{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.v{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px;display:grid;gap:2px;align-content:start}
+.v.main{background:var(--blue);border-color:var(--blue);color:var(--blue-ink)}
+.v .l{font-size:13px;font-weight:600;opacity:.8}
+.v .x{font-size:24px;font-weight:800;letter-spacing:-.01em}
+.v .d{font-size:13.5px;opacity:.85}
+
+.two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:16px}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;min-width:0}
+.panel h3{font-size:17px;font-weight:700;margin-bottom:12px}
+.panel .note{font-size:13px;color:var(--mute);margin:10px 0 0}
+
+.tl{list-style:none;margin:0;padding:0;display:grid;gap:0}
+.tl li{display:grid;grid-template-columns:72px 1fr;gap:12px;position:relative;padding-bottom:16px}
+.tl li::before{content:"";position:absolute;left:79px;top:8px;bottom:-2px;width:2px;background:var(--line)}
+.tl li:last-child::before{display:none}
+.tl li:last-child{padding-bottom:0}
+.tl time{font-family:var(--f-num);font-size:13px;color:var(--mute);padding-top:2px;white-space:nowrap}
+.tl li div{position:relative;padding-left:14px}
+.tl li div::before{content:"";position:absolute;left:-9px;top:6px;width:10px;height:10px;border-radius:50%;background:var(--card);border:2px solid var(--blue)}
+.tl li:last-child div::before{background:var(--blue)}
+.tl b{display:block;font-size:15px}
+.tl p{margin:2px 0 0;font-size:14px;color:var(--mute)}
+
+svg{width:100%;height:auto;display:block}
+.grid{stroke:var(--line);stroke-width:1}
+.ax{fill:var(--mute);font-size:12px;font-family:var(--f-ui)}
+.val{fill:var(--ink);font-size:12.5px;font-weight:700;font-family:var(--f-ui)}
+.ln{fill:none;stroke:var(--blue);stroke-width:3}
+.ln-dot{fill:var(--blue)}
+.ln2{fill:none;stroke:var(--gone);stroke-width:2;stroke-dasharray:5 4}
+.ln2-dot{fill:var(--gone)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:13px;color:var(--mute);margin-top:8px}
+.legend i{display:inline-block;width:18px;height:3px;vertical-align:middle;margin-right:6px;background:var(--blue)}
+.legend i.d{background:repeating-linear-gradient(90deg,var(--gone) 0 5px,transparent 5px 9px)}
+
+.hb{display:grid;gap:4px;margin-bottom:12px}
+.hb-l{font-size:13.5px;color:var(--mute)}
+.hb-t{display:flex;align-items:center;gap:10px}
+.hb-f{height:22px;border-radius:6px;background:var(--gone)}
+.hb-f.ok{background:var(--ok)} .hb-f.acc{background:var(--blue)} .hb-f.warn{background:var(--warn)}
+.hb-t span{font-weight:700;font-size:14px;white-space:nowrap;font-variant-numeric:tabular-nums}
+
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:14px;background:var(--card)}
+table{border-collapse:collapse;width:100%;min-width:640px;font-size:14px}
+th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:12px;letter-spacing:.05em;text-transform:uppercase;color:var(--mute);font-weight:700;background:var(--blue-soft)}
+tr:last-child td{border-bottom:0}
+td small{display:block;color:var(--mute);font-size:12.5px}
+td.n,th.n{text-align:right;white-space:nowrap}
+td a{font-weight:700;text-decoration:underline;text-underline-offset:3px}
+td a:hover{text-decoration:underline}
+.chip{display:inline-block;font-size:12px;font-weight:700;padding:3px 8px;border-radius:999px;white-space:nowrap}
+.chip.gone{background:var(--gone-soft);color:var(--gone)}
+.chip.new{background:var(--blue-soft);color:var(--blue)}
+.chip.down{background:var(--warn-soft);color:var(--warn)}
+.chip.same{background:var(--ok-soft);color:var(--ok)}
+.cap{font-size:13px;color:var(--mute);margin:8px 2px 0}
+
+.advice{background:var(--blue-soft);border-radius:14px;padding:16px 18px;display:grid;gap:6px}
+.advice b{color:var(--blue)}
+.advice p{margin:0}
+
+footer{margin-top:56px;border-top:1px solid var(--line)}
+footer .wrap{padding-block:24px 40px;display:grid;gap:10px;font-size:14px;color:var(--mute)}
+footer p{margin:0;max-width:75ch}
+footer b{color:var(--ink)}
+
+@media (max-width:820px){
+  .sum{grid-template-columns:1fr;margin-top:-18px}
+  .two{grid-template-columns:1fr}
+  .deal{grid-template-columns:1fr}
+  .deal .mark{justify-self:start}
+}
+@media (prefers-reduced-motion:no-preference){.sum a{transition:border-color .15s}}
+</style>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow">Срез рынка · 12 октября — 21 ноября 2026</div>
+    <h1>Ваши объекты на рынке</h1>
+    <p>Что происходило с ценами и объявлениями вокруг студии в Пушкине, студии в Коммунаре и помещения 42Н в квартале «Дубровский», и что из этого следует для вас. Все цифры — по объявлениям ЦИАН, Яндекс Недвижимости и Авито.</p>
+  </div>
+</header>
+
+<main class="wrap">
+  <nav class="sum" aria-label="Итоги">
+    <a href="#studio">
+      <span class="k">Студия, Пушкин · 23,7 м²</span>
+      <span class="big num">7,0–7,2 млн ₽</span>
+      <span class="s">ожидаемая цена сделки; в объявлении — 7,4–7,5 млн</span>
+      <span class="go">Подробно ↓</span>
+    </a>
+    <a href="#kommunar">
+      <span class="k">Студия, Коммунар · 30,3 м²</span>
+      <span class="big num">4,5–4,7 млн ₽</span>
+      <span class="s">ожидаемая цена сделки; или аренда 21–23 тыс. ₽ в месяц</span>
+      <span class="go">Подробно ↓</span>
+    </a>
+    <a href="#pomeshchenie">
+      <span class="k">Помещение 42Н, Дубровский · 73,9 м²</span>
+      <span class="big num">184 750 ₽</span>
+      <span class="s">аренда в месяц при ставке 2 500 ₽ за м²</span>
+      <span class="go">Подробно ↓</span>
+    </a>
+  </nav>
+
+  <div class="deal" role="note">
+    <span class="mark">Без комиссии для вас</span>
+    <p><b>Квартиру в «Дубровском» сдадим без комиссии для вас:</b> вознаграждение агентства оплачивает арендатор. Это условие наш директор Анна Викторовна согласовала специально для вас. Ключи у нас, показы арендаторам проводим сами.</p>
+  </div>
+
+  <!-- ============ СТУДИЯ ПУШКИН ============ -->
+  <section class="obj" id="studio">
+    <div class="obj-h">
+      <span class="k">Продажа</span>
+      <h2>Студия в Пушкине</h2>
+      <p>Камероновская, 14 к2, 23,7 м², 3 этаж из 5, UP-квартал «Пушкинский». Сравниваем с вторичными студиями UP-квартала и соседнего INKERI.</p>
+    </div>
+    <div class="verdict">
+      <div class="v main"><span class="l">Ожидаемая цена сделки</span><span class="x num">7,0–7,2 млн ₽</span><span class="d">выше вашей нижней границы 6 млн</span></div>
+      <div class="v"><span class="l">Цена в объявлении</span><span class="x num">7,4–7,5 млн ₽</span><span class="d">запас на торг с покупателем</span></div>
+      <div class="v"><span class="l">Медиана аналогов с отделкой</span><span class="x num">321,8 тыс. ₽/м²</span><span class="d">4 объявления; на вашу площадь — 7,63 млн</span></div>
+    </div>
+    <div class="two">
+      <div class="panel"><h3>Как менялся рынок</h3><ol class="tl"><li><time>29 окт</time><div><b>Первая оценка</b><p>Шесть студий с отделкой в UP-квартале и INKERI. Медиана 310,7 тыс. ₽ за м², на вашу площадь — 7,36 млн.</p></div></li><li><time>16 нояб</time><div><b>Рынок очистился и чуть подрос</b><p>Две студии сняты с продажи: за 7,0 и 7,5 млн. Три продавца снизили цену. Застройщик поднял цены на 0,6%. Вышла студия без отделки за 6,0 млн.</p></div></li><li><time>21 нояб</time><div><b>Продавцы торгуются, застройщик дорожает</b><p>Обе студии на Данини, 17к1 снова подешевели, на 100 и 200 тыс. Застройщик с 29 октября поднял цены на 1,8%. Медиана — 321,8 тыс. ₽ за м².</p></div></li><li><time>21 нояб</time><div><b>Авито: студия за 7,5 млн вернулась</b><p>Снятая с ЦИАН студия на Пущинской, 1к2 с 16 ноября висит на Авито за 7,5 млн, с пометкой «требует ремонта». Ещё две студии есть только на Авито: 8,15 и 8,3 млн. Медиана ЦИАН и Авито вместе — 317,1 тыс. ₽ за м² (5 студий с отделкой).</p></div></li></ol></div>
+      <div class="panel">
+        <h3>Цена студии 23,7 м² по аналогам, млн ₽</h3>
+        <svg viewBox="0 0 560 220" role="img" aria-label="Цена студии 23,7 м² по медиане аналогов, млн ₽"><line x1="56" x2="536" y1="184.0" y2="184.0" class="grid"/><text x="48" y="188.0" class="ax" text-anchor="end">6,60</text><line x1="56" x2="536" y1="143.0" y2="143.0" class="grid"/><text x="48" y="147.0" class="ax" text-anchor="end">6,90</text><line x1="56" x2="536" y1="102.0" y2="102.0" class="grid"/><text x="48" y="106.0" class="ax" text-anchor="end">7,20</text><line x1="56" x2="536" y1="61.0" y2="61.0" class="grid"/><text x="48" y="65.0" class="ax" text-anchor="end">7,50</text><line x1="56" x2="536" y1="20.0" y2="20.0" class="grid"/><text x="48" y="24.0" class="ax" text-anchor="end">7,80</text><text x="92.0" y="208" class="ax" text-anchor="middle">29.10</text><text x="296.0" y="208" class="ax" text-anchor="middle">16.11</text><text x="500.0" y="208" class="ax" text-anchor="middle">21.11</text><path d="M92.0,79.6 L296.0,37.1 L500.0,43.8" class="ln"/><circle cx="92.0" cy="79.6" r="3.5" class="ln-dot"/><text x="92.0" y="68.6" class="val" text-anchor="middle">7,36</text><circle cx="296.0" cy="37.1" r="3.5" class="ln-dot"/><text x="296.0" y="26.1" class="val" text-anchor="middle">7,67</text><circle cx="500.0" cy="43.8" r="5" class="ln-dot"/><text x="500.0" y="32.8" class="val" text-anchor="middle">7,63</text><path d="M92.0,157.1 L296.0,151.4 L500.0,140.0" class="ln2"/><circle cx="92.0" cy="157.1" r="3.5" class="ln2-dot"/><text x="92.0" y="146.1" class="val" text-anchor="middle">6,80</text><circle cx="296.0" cy="151.4" r="3.5" class="ln2-dot"/><text x="296.0" y="140.4" class="val" text-anchor="middle">6,84</text><circle cx="500.0" cy="140.0" r="5" class="ln2-dot"/><text x="500.0" y="129.0" class="val" text-anchor="middle">6,92</text></svg>
+        <div class="legend"><span><i></i>медиана вторичных студий с отделкой</span><span><i class="d"></i>застройщик в «Дубровском», студия 23 м²</span></div>
+        <p class="note">Обе линии пересчитаны на площадь 23,7 м². Вторичка держится около 7,6 млн, застройщик за месяц подорожал. Покупатель сравнивает с ним, поэтому 7,4–7,5 млн в объявлении выглядят разумно.</p>
+      </div>
+    </div>
+    <div class="tbl"><table>
+      <thead><tr><th>Объявление</th><th class="n">29 окт, млн</th><th class="n">16 нояб, млн</th><th class="n">21 нояб, млн</th><th>Что произошло</th></tr></thead>
+      <tbody><tr><td><a href="https://spb.cian.ru/sale/flat/334636613/" target="_blank" rel="noopener">Данини, 17к1 (UP-квартал) ↗</a><small>ЦИАН · 24,2 м²</small></td><td class='n'>8,10</td><td class='n'>8,00</td><td class='n'>7,90</td><td><span class="chip same">снижает цену</span></td></tr><tr><td><a href="https://spb.cian.ru/sale/flat/334690684/" target="_blank" rel="noopener">Данини, 17к1, мансарда ↗</a><small>ЦИАН · 22,2 м²</small></td><td class='n'>8,30</td><td class='n'>8,30</td><td class='n'>8,10</td><td><span class="chip down">снизили 21.11</span></td></tr><tr><td><a href="https://spb.cian.ru/sale/flat/292444598/" target="_blank" rel="noopener">Камероновская, 5к2 (INKERI) ↗</a><small>ЦИАН · 24 м²</small></td><td class='n'>6,65</td><td class='n'>6,38</td><td class='n'>6,38</td><td><span class="chip down">снизили к 16.11</span></td></tr><tr><td><a href="https://spb.cian.ru/sale/flat/331415830/" target="_blank" rel="noopener">Пущинская, 1к2 (INKERI) ↗</a><small>ЦИАН · 25,2 м²</small></td><td class='n'>7,99</td><td class='n'>7,99</td><td class='n'>7,99</td><td><span class="chip same">без изменений</span></td></tr><tr><td><a href="https://spb.cian.ru/sale/flat/334335480/" target="_blank" rel="noopener">Камероновская, 12с4 (INKERI) ↗</a><small>ЦИАН · 23 м²</small></td><td class='n'>7,00</td><td class='n'>—</td><td class='n'>—</td><td><span class="chip gone">снято 11.11</span></td></tr><tr><td><a href="https://spb.cian.ru/sale/flat/333992672/" target="_blank" rel="noopener">Пущинская, 1к2 (INKERI) ↗</a><small>ЦИАН · 25,8 м²</small></td><td class='n'>7,50</td><td class='n'>—</td><td class='n'>—</td><td><span class="chip gone">снято с ЦИАН 15.11, на Авито с 16.11 за 7,5 млн</span></td></tr><tr><td><a href="https://spb.cian.ru/sale/flat/330849756/" target="_blank" rel="noopener">Камероновская, 3к3, черновая ↗</a><small>ЦИАН · 25,5 м² · без отделки</small></td><td class='n'>6,20</td><td class='n'>6,20</td><td class='n'>6,20</td><td><span class="chip same">без отделки</span></td></tr><tr><td><a href="https://spb.cian.ru/sale/flat/336097954/" target="_blank" rel="noopener">Камероновская, 3к2, без отделки ↗</a><small>ЦИАН · 23 м² · без отделки</small></td><td class='n'>—</td><td class='n'>6,00</td><td class='n'>6,00</td><td><span class="chip new">новое 10.11</span></td></tr><tr><td><a href="https://spb.cian.ru/sale/flat/328683467/" target="_blank" rel="noopener">Дубровский, с отделкой ↗</a><small>ЦИАН · 28,04 м²</small></td><td class='n'>—</td><td class='n'>8,30</td><td class='n'>8,30</td><td><span class="chip same">в срезе с 16.11</span></td></tr><tr><td><a href="https://spb.cian.ru/sale/flat/335169498/" target="_blank" rel="noopener">Пущинская, 2 (Дубровский) ↗</a><small>ЦИАН · 28 м²</small></td><td class='n'>9,20</td><td class='n'>9,10</td><td class='n'>9,10</td><td><span class="chip down">снизили к 16.11</span></td></tr><tr><td><a href="https://spb.cian.ru/sale/flat/336270196/" target="_blank" rel="noopener">Пущинская, 4 (Дубровский) ↗</a><small>ЦИАН · 24,7 м²</small></td><td class='n'>—</td><td class='n'>9,50</td><td class='n'>9,50</td><td><span class="chip new">новое 13.11</span></td></tr><tr><td><a href="https://www.avito.ru/sankt-peterburg_pushkin/kvartiry/kvartira-studiya_30_m_55_et._8386226466" target="_blank" rel="noopener">Камероновская, 12с4 (INKERI) ↗</a><small>Авито · 30 м²</small></td><td class='n'>—</td><td class='n'>—</td><td class='n'>8,15</td><td><span class="chip new">новое на Авито 14.11</span></td></tr><tr><td><a href="https://www.avito.ru/sankt-peterburg_pushkin/kvartiry/kvartira-studiya_25_m_55_et._2686921472" target="_blank" rel="noopener">Данини, 23к1 (UP-квартал) ↗</a><small>Авито · 25 м² · без отделки</small></td><td class='n'>—</td><td class='n'>—</td><td class='n'>8,30</td><td><span class="chip same">только на Авито</span></td></tr></tbody>
+    </table></div>
+    <p class="cap">«Снято» — объявление убрали с площадки. Продали квартиру или просто сняли, площадка не показывает. Пометка «Авито» под адресом — объявление нашли только там 21 ноября. Адрес нажимается и открывает объявление. С ними медиана студий с отделкой — 317,1 тыс. ₽ за м² (5 объявлений).</p>
+    <div class="advice"><p><b>Что советуем.</b> Выставить за 7,4–7,5 млн и рассчитывать на сделку в 7,0–7,2 млн. Ниже 7,0 млн спешить не стоит: соседние студии с отделкой выставлены от 7,9 млн. Ближайшая по цене — студия на Пущинской, 1к2 за 7,5 млн, но на Авито она с пометкой «требует ремонта».</p></div>
+  </section>
+
+  <!-- ============ КОММУНАР ============ -->
+  <section class="obj" id="kommunar">
+    <div class="obj-h">
+      <span class="k">Продажа или аренда</span>
+      <h2>Студия в Коммунаре</h2>
+      <p>Ново-Антропшинская, 8, 30,3 м², 1 этаж из 9, ЖК «Ново-Антропшино». Первый этаж обычно дешевле на 5–10% (наша оценка по практике).</p>
+    </div>
+    <div class="verdict">
+      <div class="v main"><span class="l">Ожидаемая цена сделки</span><span class="x num">4,5–4,7 млн ₽</span><span class="d">с поправкой на первый этаж</span></div>
+      <div class="v"><span class="l">Цена в объявлении</span><span class="x num">4,8–4,9 млн ₽</span><span class="d">запас на торг</span></div>
+      <div class="v"><span class="l">Если сдавать</span><span class="x num">21–23 тыс. ₽</span><span class="d">в месяц плюс коммунальные; медиана 22 000 ₽ по 15 объявлениям Авито в Коммунаре</span></div>
+    </div>
+    <div class="two">
+      <div class="panel"><h3>Как менялся рынок</h3><ol class="tl"><li><time>5 нояб</time><div><b>Первая оценка</b><p>Шесть студий в ЖК «Ново-Антропшино». Медиана 184,2 тыс. ₽ за м². Самый близкий аналог — Ново-Антропшинская, 5: 31,5 м² за 4,5 млн.</p></div></li><li><time>16 нояб</time><div><b>Ушли четыре аналога</b><p>Сняты с продажи студии за 4,5 и 5,1 млн в ЖК и две в соседних домах. В вашем доме вышла студия 27 м² за 4,5 млн. Студия на Славянской подешевела с 4,9 до 4,3 млн.</p></div></li><li><time>21 нояб</time><div><b>Застройщик закончил студии</b><p>Обе студии застройщика сняты 17 и 20 ноября. Новые однокомнатные у застройщика — 5,5–7,0 млн. Медиана вторичных студий — 184,5 тыс. ₽ за м².</p></div></li><li><time>21 нояб</time><div><b>Авито: ещё три студии</b><p>Только на Авито: Ново-Антропшинская, 3 — 4,95 млн; Славянская, 9 — 5,1 и 5,5 млн. С ними медиана — 184,6 тыс. ₽ за м². Аренда студий в Коммунаре по объявлениям — медиана 22 000 ₽; в вашем доме студия на первом этаже — 21 500 ₽.</p></div></li></ol></div>
+      <div class="panel">
+        <h3>Медиана студий в ЖК, тыс. ₽ за м²</h3>
+        <svg viewBox="0 0 560 220" role="img" aria-label="Медиана студий, тыс. ₽ за м²"><line x1="56" x2="536" y1="184.0" y2="184.0" class="grid"/><text x="48" y="188.0" class="ax" text-anchor="end">160,0</text><line x1="56" x2="536" y1="143.0" y2="143.0" class="grid"/><text x="48" y="147.0" class="ax" text-anchor="end">170,0</text><line x1="56" x2="536" y1="102.0" y2="102.0" class="grid"/><text x="48" y="106.0" class="ax" text-anchor="end">180,0</text><line x1="56" x2="536" y1="61.0" y2="61.0" class="grid"/><text x="48" y="65.0" class="ax" text-anchor="end">190,0</text><line x1="56" x2="536" y1="20.0" y2="20.0" class="grid"/><text x="48" y="24.0" class="ax" text-anchor="end">200,0</text><text x="92.0" y="208" class="ax" text-anchor="middle">05.11</text><text x="296.0" y="208" class="ax" text-anchor="middle">16.11</text><text x="500.0" y="208" class="ax" text-anchor="middle">21.11</text><path d="M92.0,84.9 L296.0,98.5 L500.0,83.3" class="ln"/><circle cx="92.0" cy="84.9" r="3.5" class="ln-dot"/><text x="92.0" y="73.9" class="val" text-anchor="middle">184,2</text><circle cx="296.0" cy="98.5" r="3.5" class="ln-dot"/><text x="296.0" y="87.5" class="val" text-anchor="middle">180,9</text><circle cx="500.0" cy="83.3" r="5" class="ln-dot"/><text x="500.0" y="72.3" class="val" text-anchor="middle">184,5</text></svg>
+        <p class="note">Средняя цена за метр почти не меняется, но предложение тает: из девяти студий четыре сняты с продажи, ещё одна подешевела на 600 тыс. Для вашей квартиры это хорошо: конкурентов становится меньше.</p>
+      </div>
+    </div>
+    <div class="tbl"><table>
+      <thead><tr><th>Объявление о продаже</th><th class="n">5 нояб, млн</th><th class="n">16 нояб, млн</th><th class="n">21 нояб, млн</th><th>Что произошло</th></tr></thead>
+      <tbody><tr><td><a href="https://spb.cian.ru/sale/flat/335449636/" target="_blank" rel="noopener">Ново-Антропшинская, 5 ↗</a><small>ЦИАН · 31,5 м² · этаж 3/9</small></td><td class='n'>4,50</td><td class='n'>—</td><td class='n'>—</td><td><span class="chip gone">снято 09.11</span></td></tr><tr><td><a href="https://spb.cian.ru/sale/flat/331612969/" target="_blank" rel="noopener">Ново-Антропшинская, 3 ↗</a><small>ЦИАН · 30 м² · этаж 5/9</small></td><td class='n'>5,10</td><td class='n'>—</td><td class='n'>—</td><td><span class="chip gone">снято 12.11</span></td></tr><tr><td><a href="https://spb.cian.ru/sale/flat/334944859/" target="_blank" rel="noopener">Ново-Антропшинская, 3 ↗</a><small>ЦИАН · 24,7 м² · этаж 5/9</small></td><td class='n'>5,05</td><td class='n'>5,05</td><td class='n'>5,05</td><td><span class="chip same">без изменений</span></td></tr><tr><td><a href="https://spb.cian.ru/sale/flat/329130254/" target="_blank" rel="noopener">Ново-Антропшинская, 3 ↗</a><small>ЦИАН · 28,2 м² · этаж 9/9</small></td><td class='n'>5,10</td><td class='n'>5,10</td><td class='n'>5,10</td><td><span class="chip same">без изменений</span></td></tr><tr><td><a href="https://spb.cian.ru/sale/flat/335246783/" target="_blank" rel="noopener">Славянская, 8к3 ↗</a><small>ЦИАН · 23,3 м² · этаж 1/3</small></td><td class='n'>4,90</td><td class='n'>4,30</td><td class='n'>4,30</td><td><span class="chip down">снизили на 600 тыс.</span></td></tr><tr><td><a href="https://spb.cian.ru/sale/flat/331395857/" target="_blank" rel="noopener">Славянская, 8к2 ↗</a><small>ЦИАН · 23,2 м² · этаж 2/3</small></td><td class='n'>4,35</td><td class='n'>4,35</td><td class='n'>4,35</td><td><span class="chip same">без изменений</span></td></tr><tr><td><a href="https://spb.cian.ru/sale/flat/336011552/" target="_blank" rel="noopener">Ново-Антропшинская, 8 — ваш дом ↗</a><small>ЦИАН · 27 м² · этаж 7/8</small></td><td class='n'>—</td><td class='n'>4,50</td><td class='n'>4,50</td><td><span class="chip new">новое 07.11</span></td></tr><tr><td><a href="https://spb.cian.ru/sale/flat/334663169/" target="_blank" rel="noopener">Застройщик, Ново-Антропшинская, 5к2 ↗</a><small>ЦИАН · 28,4 м² · этаж —</small></td><td class='n'>5,01</td><td class='n'>4,77</td><td class='n'>—</td><td><span class="chip gone">снизили, снято 17.11</span></td></tr><tr><td><a href="https://spb.cian.ru/sale/flat/334663228/" target="_blank" rel="noopener">Застройщик, Ново-Антропшинская, 5 ↗</a><small>ЦИАН · 29,2 м² · этаж —</small></td><td class='n'>4,98</td><td class='n'>4,98</td><td class='n'>—</td><td><span class="chip gone">снято 20.11</span></td></tr><tr><td><a href="https://www.avito.ru/leningradskaya_oblast_kommunar/kvartiry/kvartira-studiya_229_m_59_et._8514521881" target="_blank" rel="noopener">Ново-Антропшинская, 3 ↗</a><small>Авито · 22,9 м² · этаж 5/9</small></td><td class='n'>—</td><td class='n'>—</td><td class='n'>4,95</td><td><span class="chip same">только на Авито</span></td></tr><tr><td><a href="https://www.avito.ru/leningradskaya_oblast_kommunar/kvartiry/kvartira-studiya_294_m_29_et._8386450953" target="_blank" rel="noopener">Славянская, 9 ↗</a><small>Авито · 29,4 м² · этаж 2/9</small></td><td class='n'>—</td><td class='n'>—</td><td class='n'>5,10</td><td><span class="chip new">новое на Авито 14.11</span></td></tr><tr><td><a href="https://www.avito.ru/leningradskaya_oblast_kommunar/kvartiry/kvartira-studiya_298_m_29_et._8495815744" target="_blank" rel="noopener">Славянская, 9 ↗</a><small>Авито · 29,8 м² · этаж 2/9</small></td><td class='n'>—</td><td class='n'>—</td><td class='n'>5,50</td><td><span class="chip new">новое на Авито 16.11</span></td></tr></tbody>
+    </table></div>
+    <div class="tbl"><table>
+      <thead><tr><th>Аренда рядом, 21 ноября</th><th class="n">В месяц</th><th>Примечание</th></tr></thead>
+      <tbody><tr><td><a href="https://spb.cian.ru/rent/flat/335280016/" target="_blank" rel="noopener">Ново-Антропшинская, 8 — ваш дом, студия ↗</a><small>ЦИАН · 32 м²</small></td><td class='n'>25 000 ₽</td><td>—</td></tr><tr><td><a href="https://spb.cian.ru/rent/flat/334826384/" target="_blank" rel="noopener">Ново-Антропшинская, 8 — ваш дом ↗</a><small>ЦИАН · 32,6 м²</small></td><td class='n'>23 000 ₽</td><td>—</td></tr><tr><td><a href="https://realty.yandex.ru/offer/4298535539260940800/" target="_blank" rel="noopener">Ново-Антропшинская, 8 — ваш дом ↗</a><small>Яндекс · 27,5 м²</small></td><td class='n'>24 000 ₽</td><td>—</td></tr><tr><td><a href="https://spb.cian.ru/rent/flat/336576865/" target="_blank" rel="noopener">Ново-Антропшинская, 3 ↗</a><small>ЦИАН · 30 м²</small></td><td class='n'>25 000 ₽</td><td>+ 3 500 коммунальные</td></tr><tr><td><a href="https://www.avito.ru/leningradskaya_oblast_kommunar/kvartiry/kvartira-studiya_32_m_18_et._7905403284" target="_blank" rel="noopener">Ново-Антропшинская, 8 — ваш дом, 1 этаж ↗</a><small>Авито · 32 м²</small></td><td class='n'>21 500 ₽</td><td>первый этаж, как у вас</td></tr><tr><td><a href="https://www.avito.ru/leningradskaya_oblast_kommunar/kvartiry/kvartira-studiya_32_m_29_et._8608846921" target="_blank" rel="noopener">Ново-Антропшинская, 8 — ваш дом, 2 этаж ↗</a><small>Авито · 32 м²</small></td><td class='n'>24 000 ₽</td><td>евроремонт</td></tr><tr><td><a href="https://www.avito.ru/leningradskaya_oblast_kommunar/kvartiry/kvartira-studiya_23_m_79_et._7712894046" target="_blank" rel="noopener">Ново-Антропшинская, 3 ↗</a><small>Авито · 23 м²</small></td><td class='n'>21 000 ₽</td><td>евроремонт</td></tr><tr><td><a href="https://www.avito.ru/leningradskaya_oblast_kommunar/kvartiry/kvartira-studiya_304_m_79_et._7930020993" target="_blank" rel="noopener">Ново-Антропшинская, 5 ↗</a><small>Авито · 30,4 м²</small></td><td class='n'>30 000 ₽</td><td>евроремонт, 7 этаж</td></tr></tbody>
+    </table></div>
+    <p class="cap">Первые этажи в Коммунаре по объявлениям: на ЦИАН — 18 000–20 000 ₽ в месяц, на Авито — 20 000–21 500 ₽; в вашем доме — 21 500 ₽. Медиана всех объявлений ЦИАН — 23 000 ₽ (19 шт.).</p>
+    <div class="advice"><p><b>Что советуем.</b> Решить, продавать или сдавать. При продаже — 4,8–4,9 млн в объявлении. При сдаче — 21–23 тыс. ₽ в месяц плюс коммунальные.</p></div>
+  </section>
+
+  <!-- ============ ПОМЕЩЕНИЕ 42Н ============ -->
+  <section class="obj" id="pomeshchenie">
+    <div class="obj-h">
+      <span class="k">Аренда</span>
+      <h2>Помещение 42Н в «Дубровском»</h2>
+      <p>Камероновская, 9, стр. 1, 73,9 м², первый этаж, потолки 4 м. Ставки — за квадратный метр в месяц.</p>
+    </div>
+    <div class="verdict">
+      <div class="v main"><span class="l">Рекомендуемая аренда</span><span class="x num">184 750 ₽</span><span class="d">в месяц, ставка 2 500 ₽ за м²</span></div>
+      <div class="v"><span class="l">Просят соседи сейчас</span><span class="x num">2 500 ₽/м²</span><span class="d">медиана 7 объявлений квартала на Авито, многие с каникулами</span></div>
+      <div class="v"><span class="l">Просили соседи в октябре</span><span class="x num">3 000 ₽/м²</span><span class="d">три таких помещения сняты с Авито к 21 ноября</span></div>
+    </div>
+    <div class="two">
+      <div class="panel"><h3>Как менялся рынок</h3><ol class="tl"><li><time>12 окт</time><div><b>Соседи просят 3 000 ₽ за м²</b><p>Соседи в Камероновской, 9 и Пущинской, 4 просят около 3 000 ₽ за м² в месяц.</p></div></li><li><time>26 окт</time><div><b>Все висят, одно дешевеет</b><p>Ни одно объявление в квартале не ушло. Помещение на Пущинской, 4 подешевело с 230 до 210 тыс. Нашли реальную ставку: «Самокат» на Данини, 5 платит 2 200 ₽ за м².</p></div></li><li><time>16 нояб</time><div><b>На ЦИАН в квартале пусто</b><p>Три объявления сняты 22 и 30 октября. Сдали их или просто убрали — площадка не показывает.</p></div></li><li><time>21 нояб</time><div><b>Соседи снижают ставку</b><p>С Авито сняты три помещения квартала по 3 000 ₽ и дороже: 131,1, 95,7 и 65 м²; сдали их или убрали, площадка не показывает. Новые соседи просят 2 500 ₽ «на первое время» и дают арендные каникулы, на Пущинской, 4 — 2 000 ₽ первые три месяца. Медиана 7 действующих объявлений квартала — 2 500 ₽ за м².</p></div></li></ol></div>
+      <div class="panel">
+        <h3>Ставка аренды, ₽ за м² в месяц</h3>
+        <div class="hb"><div class="hb-l">«Самокат», Данини, 5 — реальная аренда (со слов продавца)</div><div class="hb-t"><div class="hb-f ok" style="width:71.0%"></div><span>2 200 ₽</span></div></div><div class="hb"><div class="hb-l">Рекомендуем для 42Н</div><div class="hb-t"><div class="hb-f acc" style="width:80.6%"></div><span>2 500 ₽</span></div></div><div class="hb"><div class="hb-l">Просят соседи сейчас (Авито, 7 объявлений, медиана)</div><div class="hb-t"><div class="hb-f mute" style="width:80.6%"></div><span>2 500 ₽ — и дают каникулы</span></div></div><div class="hb"><div class="hb-l">Просили соседи в октябре</div><div class="hb-t"><div class="hb-f warn" style="width:96.8%"></div><span>3 000 ₽ — три таких помещения сняты</span></div></div>
+        <p class="note">Реальная ставка — «Самокат» на <a href="https://spb.cian.ru/sale/commercial/335272629/" target="_blank" rel="noopener">Данини, 5 ↗</a>: 178 640 ₽ за 81,2 м². Соседи по кварталу сами ушли с 3 000 ₽ на 2 500 ₽ и предлагают каникулы. Ставка 2 500 ₽ держит 42Н на уровне соседей.</p>
+      </div>
+    </div>
+    <div class="tbl"><table>
+      <thead><tr><th>Объявление в квартале (нажмите адрес)</th><th class="n">12 окт, ₽/мес</th><th class="n">26 окт, ₽/мес</th><th class="n">21 нояб, ₽/мес</th><th class="n">₽ за м²</th><th>Что произошло</th></tr></thead>
+      <tbody><tr><td><a href="https://www.avito.ru/sankt-peterburg_pushkin/kommercheskaya_nedvizhimost/torgovaya_ploschad_131.1_m_8105858931" target="_blank" rel="noopener">Камероновская, 9 ↗</a><small>Авито · 131,1 м²</small></td><td class='n'>393 300</td><td class='n'>393 300</td><td class='n'>—</td><td class='n'>3 000</td><td><span class="chip gone">снято с Авито к 21.11; на Яндексе ещё висит за 393 000 ₽</span></td></tr><tr><td><a href="https://www.avito.ru/sankt-peterburg_pushkin/kommercheskaya_nedvizhimost/torgovaya_ploschad_95.7_m_8105019377" target="_blank" rel="noopener">Камероновская, 9 ↗</a><small>Авито · 95,7 м²</small></td><td class='n'>287 100</td><td class='n'>287 100</td><td class='n'>—</td><td class='n'>3 000</td><td><span class="chip gone">снято с Авито к 21.11</span></td></tr><tr><td><a href="https://www.avito.ru/sankt-peterburg_pushkin/kommercheskaya_nedvizhimost/svobodnogo_naznacheniya_65_m_8336850369" target="_blank" rel="noopener">Пущинская, 4 ↗</a><small>Авито · 65 м²</small></td><td class='n'>230 000</td><td class='n'>210 000</td><td class='n'>—</td><td class='n'>3 231</td><td><span class="chip gone">снизили к 26.10, снято к 21.11</span></td></tr><tr><td><a href="https://spb.cian.ru/rent/commercial/333430471/" target="_blank" rel="noopener">Камероновская, 9 ↗</a><small>ЦИАН · 40,3 м²</small></td><td class='n'>120 000</td><td class='n'>120 000</td><td class='n'>—</td><td class='n'>2 978</td><td><span class="chip gone">снято 30.10</span></td></tr><tr><td><a href="https://spb.cian.ru/rent/commercial/334155091/" target="_blank" rel="noopener">Камероновская, 11 ↗</a><small>ЦИАН · 75 м²</small></td><td class='n'>217 500</td><td class='n'>217 500</td><td class='n'>—</td><td class='n'>2 900</td><td><span class="chip gone">снято 22.10</span></td></tr><tr><td><a href="https://spb.cian.ru/rent/commercial/334038498/" target="_blank" rel="noopener">Анциферовская, 9В ↗</a><small>ЦИАН · 76,3 м²</small></td><td class='n'>—</td><td class='n'>185 000</td><td class='n'>—</td><td class='n'>2 425</td><td><span class="chip gone">снято 30.10</span></td></tr><tr><td><a href="https://www.avito.ru/sankt-peterburg_pushkin/kommercheskaya_nedvizhimost/torgovaya_ploschad_51.6_m_8105056148" target="_blank" rel="noopener">Пущинская, 4 ↗</a><small>Авито · 51,6 м²</small></td><td class='n'>154 800</td><td class='n'>154 800</td><td class='n'>154 800</td><td class='n'>3 000</td><td><small>висит, 783 просмотра</small></td></tr><tr><td><a href="https://www.avito.ru/sankt-peterburg_pushkin/kommercheskaya_nedvizhimost/svobodnogo_naznacheniya_75_m_8361662568" target="_blank" rel="noopener">Камероновская, 11 ↗</a><small>Авито · 75 м²</small></td><td class='n'>217 500</td><td class='n'>217 500</td><td class='n'>217 500</td><td class='n'>2 900</td><td><small>висит, 267 просмотров</small></td></tr><tr><td><a href="https://www.avito.ru/sankt-peterburg_pushkin/kommercheskaya_nedvizhimost/arenda_pomescheniya_75.3_m_8015801084" target="_blank" rel="noopener">Камероновская, 11 ↗</a><small>Авито · 75,3 м²</small></td><td class='n'>188 250</td><td class='n'>188 250</td><td class='n'>188 250</td><td class='n'>2 500</td><td><small>висит, 1 104 просмотра</small></td></tr><tr><td><a href="https://www.avito.ru/sankt-peterburg_pushkin/kommercheskaya_nedvizhimost/likvidnoe_pomeschenie_na_glavnom_trafike_8372395208" target="_blank" rel="noopener">Камероновская, 9 ↗</a><small>Авито · 75 м²</small></td><td class='n'>—</td><td class='n'>—</td><td class='n'>187 500</td><td class='n'>2 500</td><td><span class="chip new">новое 26.10: 2 500 ₽ «на первое время», каникулы</span></td></tr><tr><td><a href="https://www.avito.ru/sankt-peterburg_pushkin/kommercheskaya_nedvizhimost/na_pervoy_linii_bolshoy_zhiloy_massiv_8445897529" target="_blank" rel="noopener">Камероновская, 9 ↗</a><small>Авито · 30 м²</small></td><td class='n'>—</td><td class='n'>—</td><td class='n'>75 000</td><td class='n'>2 500</td><td><span class="chip new">новое 20.11: 2 500 ₽ «на первое время», каникулы</span></td></tr><tr><td><a href="https://www.avito.ru/sankt-peterburg_pushkin/kommercheskaya_nedvizhimost/sdam_pomeschenie_647_m_v_zhk_dubrovskiy_pushkin_8348517252" target="_blank" rel="noopener">Пущинская, 4 ↗</a><small>Авито · 64,7 м²</small></td><td class='n'>—</td><td class='n'>—</td><td class='n'>129 400</td><td class='n'>2 000</td><td><span class="chip new">новое 30.10: 2 000 ₽ первые 3 месяца, дальше 3 000</span></td></tr><tr><td><a href="https://www.avito.ru/sankt-peterburg_pushkin/kommercheskaya_nedvizhimost/svobodnogo_naznacheniya_110_m_8167978973" target="_blank" rel="noopener">Анциферовская, 9В ↗</a><small>Авито · 110 м²</small></td><td class='n'>—</td><td class='n'>—</td><td class='n'>275 000</td><td class='n'>2 500</td><td><span class="chip new">новое 30.10: чистовая отделка, коммунальные включены</span></td></tr></tbody>
+    </table></div>
+    <p class="cap">Авито смотрели 12 и 26 октября и 21 ноября, ЦИАН и Яндекс Недвижимость — до 21 ноября. «—» — объявления в этот день не было или оно уже снято. Ставка за м² — по последней цене.</p>
+    <div class="advice"><p><b>Что советуем.</b> Выставить 42Н по 2 500 ₽ за м², то есть 184 750 ₽ в месяц.</p></div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p><b>Как читать.</b> Все цены — из объявлений, а не из сделок. Реальная цена сделки обычно ниже на 3–7% (наша оценка по практике). «Медиана» — середина ряда: половина объявлений дешевле, половина дороже. Набор объявлений на каждую дату свой: одни выходят, другие уходят.</p>
+    <p><b>Источники.</b> ЦИАН и Яндекс Недвижимость — шесть срезов с 12 октября по 21 ноября; Авито — 12 и 26 октября и 21 ноября. Ссылки ведут на объявления; снятые могут не открыться.</p>
+    <p>Подготовил Денис Тарасов, агентство недвижимости «Адвекс Юнит». 21 ноября 2026.</p>
+  </div>
+</footer>
