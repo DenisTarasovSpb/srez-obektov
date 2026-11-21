@@ -41,7 +41,8 @@ a:focus-visible{outline:2px solid var(--blue);outline-offset:2px;border-radius:4
 .hero h1{font-size:clamp(30px,5vw,46px);font-weight:800;letter-spacing:-.02em}
 .hero p{margin:0;max-width:62ch;opacity:.9}
 
-.sum{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:-22px}
+.sum{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-top:-22px}
+@media (max-width:1100px){.sum{grid-template-columns:repeat(2,minmax(0,1fr))}}
 .sum a{display:grid;gap:6px;align-content:start;text-decoration:none;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 18px 16px;box-shadow:0 6px 18px rgba(20,32,70,.08)}
 .sum a:hover{border-color:var(--blue)}
 .sum .k{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--mute);font-weight:700}
@@ -143,12 +144,18 @@ footer b{color:var(--ink)}
   <div class="wrap">
     <div class="eyebrow">Срез рынка · 12 октября — 21 ноября 2026</div>
     <h1>Ваши объекты на рынке</h1>
-    <p>Что происходило с ценами и объявлениями вокруг студии в Пушкине, студии в Коммунаре и помещения 42Н в квартале «Дубровский», и что из этого следует для вас. Все цифры — по объявлениям ЦИАН, Яндекс Недвижимости и Авито.</p>
+    <p>Почём сдаются квартиры в квартале «Дубровский» и что происходило с ценами и объявлениями вокруг студии в Пушкине, студии в Коммунаре и помещения 42Н, — и что из этого следует для вас. Все цифры — по объявлениям ЦИАН, Яндекс Недвижимости и Авито.</p>
   </div>
 </header>
 
 <main class="wrap">
   <nav class="sum" aria-label="Итоги">
+    <a href="#kvartira">
+      <span class="k">Однокомнатная, Дубровский · аренда</span>
+      <span class="big num">36–41 тыс. ₽</span>
+      <span class="s">в месяц без мебели, с кухней, плюс коммунальные — оценка</span>
+      <span class="go">Подробно ↓</span>
+    </a>
     <a href="#studio">
       <span class="k">Студия, Пушкин · 23,7 м²</span>
       <span class="big num">7,0–7,2 млн ₽</span>
@@ -173,6 +180,45 @@ footer b{color:var(--ink)}
     <span class="mark">Без комиссии для вас</span>
     <p><b>Квартиру в «Дубровском» сдадим без комиссии для вас:</b> вознаграждение агентства оплачивает арендатор. Это условие наш директор Анна Викторовна согласовала специально для вас. Показывать квартиру арендаторам будем сами.</p>
   </div>
+
+  <!-- ============ КВАРТИРА В ДУБРОВСКОМ (АРЕНДА) ============ -->
+  <section class="obj" id="kvartira">
+    <div class="obj-h">
+      <span class="k">Аренда</span>
+      <h2>Однокомнатная квартира в «Дубровском»</h2>
+      <p>Сдаётся без мебели, будет только кухня. Площадь и этаж уточним по планировке. Сравниваем с квартирами квартала и соседних INKERI и «Александровский» на ЦИАН и Яндекс Недвижимости, 21 ноября.</p>
+    </div>
+    <div class="verdict">
+      <div class="v main"><span class="l">Без мебели, с кухней</span><span class="x num">36–41 тыс. ₽</span><span class="d">в месяц плюс коммунальные; оценка, ближе к 40 000 ₽</span></div>
+      <div class="v"><span class="l">С мебелью в квартале</span><span class="x num">48 000 ₽</span><span class="d">медиана трёх однокомнатных, 43–49 тыс.; около 1 396 ₽ за м²</span></div>
+      <div class="v"><span class="l">Без мебели дешевле</span><span class="x num">на 17%</span><span class="d">так в соседнем INKERI: 29 000 ₽ против 35 000 ₽ с мебелью</span></div>
+    </div>
+    <div class="two">
+      <div class="panel">
+        <h3>Что видно по объявлениям</h3>
+        <ol class="tl">
+          <li><time>Квартал</time><div><b>Шесть квартир, все с ремонтом и мебелью</b><p>Студия, три однокомнатные, двухкомнатная и евро-трёшка. Квартир без мебели или без ремонта в квартале на площадках нет.</p></div></li>
+          <li><time>Однушки</time><div><b>43–49 тыс. ₽ в месяц</b><p>Все с просторной кухней-гостиной 15–16 м². Однокомнатная за 48 000 ₽ на Камероновской, 11 висит с 22 сентября — два месяца.</p></div></li>
+          <li><time>Без мебели</time><div><b>Ориентир — INKERI, 29 000 ₽</b><p>Однокомнатная 34,7 м² на Камероновской, 5 к2: комната пустая, кухня с мебелью и новой техникой — почти как у вас. С мебелью в том же комплексе просят 35–38 тыс.</p></div></li>
+          <li><time>Риск</time><div><b>Высокая цена без мебели — долгий простой</b><p>Однокомнатная 47 м² без мебели в «Александровском» за 47 000 ₽ стоит на ЦИАН с ноября 2025 года.</p></div></li>
+        </ol>
+      </div>
+      <div class="panel">
+        <h3>Аренда однокомнатных, ₽ в месяц</h3>
+        <div class="hb"><div class="hb-l">Однокомнатные в «Дубровском» с мебелью (медиана 3 объявлений)</div><div class="hb-t"><div class="hb-f mute" style="width:92.3%"></div><span>48 000 ₽</span></div></div><div class="hb"><div class="hb-l">Ваша квартира без мебели, с кухней — оценка</div><div class="hb-t"><div class="hb-f acc" style="width:76.9%"></div><span>около 40 000 ₽</span></div></div><div class="hb"><div class="hb-l">Однокомнатные в INKERI с мебелью (медиана 3)</div><div class="hb-t"><div class="hb-f mute" style="width:67.3%"></div><span>35 000 ₽</span></div></div><div class="hb"><div class="hb-l">INKERI, однокомнатная без мебели, только кухня</div><div class="hb-t"><div class="hb-f ok" style="width:55.8%"></div><span>29 000 ₽</span></div></div><div class="hb"><div class="hb-l">Все однокомнатные в Пушкине (медиана 38)</div><div class="hb-t"><div class="hb-f mute" style="width:67.3%"></div><span>35 000 ₽</span></div></div>
+        <p class="note">Оценка: цены однокомнатных квартала с мебелью уменьшены на 17% — столько в соседнем INKERI стоит отсутствие мебели в комнате. Квартал дороже Пушкина в целом: медиана однокомнатных по городу — 35 000 ₽ (38 объявлений ЦИАН).</p>
+      </div>
+    </div>
+    <div class="tbl"><table>
+      <thead><tr><th>Квартиры в «Дубровском» (нажмите адрес)</th><th class="n">В месяц</th><th class="n">₽ за м²</th><th>Что в квартире</th></tr></thead>
+      <tbody><tr><td><a href="https://spb.cian.ru/rent/flat/335248389/" target="_blank" rel="noopener">Студия, Пущинская, 2 ↗</a><small>ЦИАН · 25,7 м² · этаж 4/4 · с 23 окт</small></td><td class='n'>37 000 ₽</td><td class='n'>1 440</td><td><small>мебель, всё для въезда; плюс коммунальные 5 000 ₽</small></td></tr><tr><td><a href="https://spb.cian.ru/rent/flat/334166694/" target="_blank" rel="noopener">1-комн., Камероновская, 11 ↗</a><small>ЦИАН · 32,5 м² · этаж 3/4 · с 22 сен</small></td><td class='n'>48 000 ₽</td><td class='n'>1 477</td><td><small>кухня 16 м², мебель и техника; плюс коммунальные 6 000 ₽</small></td></tr><tr><td><a href="https://spb.cian.ru/rent/flat/336621045/" target="_blank" rel="noopener">1-комн., Пущинская, 4 стр. 1 ↗</a><small>ЦИАН · 35,1 м² · этаж 4/4 · с 18 нояб</small></td><td class='n'>49 000 ₽</td><td class='n'>1 396</td><td><small>кухня-гостиная 15 м², мебель, техника, текстиль; плюс коммунальные 5 000 ₽</small></td></tr><tr><td><a href="https://spb.cian.ru/rent/flat/335248258/" target="_blank" rel="noopener">1-комн., Камероновская, 11 ↗</a><small>ЦИАН · 36 м² · этаж 3/4 · с 23 окт</small></td><td class='n'>43 000 ₽</td><td class='n'>1 194</td><td><small>кухня 15 м², мебель, сдаёт собственник; плюс коммунальные 5 000 ₽</small></td></tr><tr><td><a href="https://spb.cian.ru/rent/flat/332458079/" target="_blank" rel="noopener">2-комн., Камероновская, 11 ↗</a><small>ЦИАН · 54,4 м² · этаж 3/4 · с 30 июл</small></td><td class='n'>75 000 ₽</td><td class='n'>1 379</td><td><small>дизайнерский ремонт, мебель; плюс коммунальные 6 000 ₽</small></td></tr><tr><td><a href="https://spb.cian.ru/rent/flat/332170701/" target="_blank" rel="noopener">Евро-3, Камероновская, 9 ↗</a><small>ЦИАН · 60 м² · этаж 2/4 · с 20 июл</small></td><td class='n'>84 000 ₽</td><td class='n'>1 400</td><td><small>две комнаты и кухня-гостиная 16 м², мебель</small></td></tr></tbody>
+    </table></div>
+    <div class="tbl"><table>
+      <thead><tr><th>Рядом, без мебели</th><th class="n">В месяц</th><th class="n">₽ за м²</th><th>Что в квартире</th></tr></thead>
+      <tbody><tr><td><a href="https://spb.cian.ru/rent/flat/333582107/" target="_blank" rel="noopener">1-комн., INKERI, Камероновская, 5 к2 ↗</a><small>ЦИАН · 34,7 м² · этаж 2/6 · с 3 сен</small></td><td class='n'>29 000 ₽</td><td class='n'>836</td><td><small>комната без мебели, кухня с мебелью, новая техника</small></td></tr><tr><td><a href="https://spb.cian.ru/rent/flat/324017465/" target="_blank" rel="noopener">1-комн., «Александровский», Анциферовская, 11 к1 ↗</a><small>ЦИАН · 47 м² · этаж 4/5 · с 17 нояб 2025</small></td><td class='n'>47 000 ₽</td><td class='n'>1 000</td><td><small>без мебели; висит год</small></td></tr></tbody>
+    </table></div>
+    <p class="cap">Длительная аренда, ЦИАН и Яндекс Недвижимость 21 ноября; на Яндексе те же квартиры, новых нет. Коммунальные платежи арендатор платит сверху, обычно 5 000–6 000 ₽. Цены — из объявлений, а не из договоров.</p>
+  </section>
 
   <!-- ============ СТУДИЯ ПУШКИН ============ -->
   <section class="obj" id="studio">
